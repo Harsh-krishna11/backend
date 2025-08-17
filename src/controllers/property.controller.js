@@ -29,6 +29,7 @@ export const createProperty = async (req, res) => {
       city,
       neighbourhood,
       sellerName,
+      subcategory,
       phoneNumber,
     } = req.body;
 
@@ -56,6 +57,7 @@ export const createProperty = async (req, res) => {
       neighbourhood,
       sellerName,
       phoneNumber,
+      subcategory,
     });
 
     await property.save();
@@ -83,5 +85,32 @@ export const getProperties = async (req, res) => {
   } catch (error) {
     console.error("Error fetching properties:", error);
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// Get a single property by ID
+export const getPropertyById = async (req, res) => {
+  try {
+    const { id } = req.params; // get id from route
+    const property = await Property.findById(id);
+
+    if (!property) {
+      return res.status(404).json({
+        success: false,
+        message: "Property not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      data: property,
+    });
+  } catch (error) {
+    console.error("Error fetching property by ID:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
   }
 };

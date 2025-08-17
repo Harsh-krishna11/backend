@@ -65,6 +65,7 @@ const propertySchema = new mongoose.Schema(
     neighbourhood: { type: String, required: true },
     sellerName: { type: String, required: true },
     phoneNumber: { type: String, required: true },
+    subcategory: { type: String, required: true },
   },
   { timestamps: true }
 );
